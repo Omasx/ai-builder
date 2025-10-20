@@ -1,0 +1,28 @@
+version: "3.8"
+services:
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+
+  backend:
+    build: ./backend
+    volumes:
+      - ./backend:/app
+      - ./data:/data
+    environment:
+      - REDIS_URL=${REDIS_URL}
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - OPENROUTER_MODEL_WRITER=${OPENROUTER_MODEL_WRITER}
+      - OPENROUTER_MODEL_IMPROVER=${OPENROUTER_MODEL_IMPROVER}
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
