@@ -1,11 +1,13 @@
-FROM python:3.11-slim
+import React from 'react';
 
-WORKDIR /app
+function App() {
+  return (
+    <div style={{ padding: '50px', textAlign: 'center' }}>
+      <h1>AI App Builder - Working!</h1>
+      <p>Backend is successfully deployed</p>
+      <a href="/docs">View API Documentation</a>
+    </div>
+  );
+}
 
-COPY backend/ ./backend/
-
-RUN pip install --no-cache-dir fastapi uvicorn requests python-dotenv redis celery
-
-EXPOSE 8000
-
-CMD ["uvicorn", "backend.app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+export default App;
