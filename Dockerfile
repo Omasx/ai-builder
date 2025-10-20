@@ -4,9 +4,8 @@ WORKDIR /app
 
 RUN apk add --no-cache python3 py3-pip
 
-COPY backend/ /app/backend/
-COPY frontend/ /app/frontend/
-COPY *.py *.yml *.txt *.json /app/ 2>/dev/null || true
+COPY backend ./backend/
+COPY frontend ./frontend/
 
 RUN pip3 install --no-cache-dir fastapi uvicorn requests python-dotenv redis celery
 
