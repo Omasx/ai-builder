@@ -1,15 +1,19 @@
-FROM node:18-bullseye
+FROM node:18-alpine
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y python3 python3-pip
+RUN apk add --no-cache python3 py3-pip
 
-COPY . .
+COPY backend/ /app/backend/
+COPY frontend/ /app/frontend/
+COPY *.py *.yml *.txt *.json /app/ 2>/dev/null || true
 
-RUN pip3 install fastapi uvicorn requests python-dotenv redis celery
+RUN pip3 install --no-cache-dir fastapi uvicorn requests python-dotenv redis celery
 
-RUN cd frontend && npm install && npm run build
+WORKDIR /app/frontend
+RUN npm install --no-audit --no-fund
+RUN npm run build --silent
 
+WORKDIR /app
 EXPOSE 8000
-
 CMD ["uvicorn", "backend.app.main:app", "--host", "0.0.0.0", "--port", "8000"]
