@@ -2,10 +2,9 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-RUN python -m pip install --upgrade pip --root-user-action=ignore
-RUN pip install --no-cache-dir --root-user-action=ignore fastapi uvicorn requests python-dotenv redis
-
 COPY backend/ ./backend/
+
+RUN pip install --no-cache-dir fastapi uvicorn requests python-dotenv redis
 
 EXPOSE 8000
 
