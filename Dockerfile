@@ -2,7 +2,7 @@ FROM python:3.11
 
 WORKDIR /app
 
-COPY backend/ ./backend/
+COPY . .
 
 RUN pip install fastapi uvicorn requests python-dotenv
 
